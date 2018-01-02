@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package extended;
 
-import "github.com/kchristidis/nested/common/common.proto";
+import "github.com/kchristidis/nested/lib/common/common.proto";
 
 service Get {
     rpc Get (common.Request) returns (Response);

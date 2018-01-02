@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/kchristidis/nested/common";
+option go_package = "github.com/kchristidis/nested/lib/common";
 
 package common;
 
