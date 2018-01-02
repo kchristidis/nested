@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package extended;
+
+import "github.com/kchristidis/nested/common/common.proto";
+
+service Get {
+    rpc Get (common.Request) returns (Response);
+}
+
+message Response {
+    oneof Type {
+        common.Response common = 1;
+        int32 baz = 2;
+    }
+}
