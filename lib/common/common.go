@@ -10,11 +10,12 @@ import (
 	"google.golang.org/grpc"
 )
 
-const srvAddr = "localhost:5051"
+// ServerAddress carries the address the server is listening on.
+const ServerAddress = "localhost:5051"
 
 // NewClient returns a new client.
 func NewClient() (GetClient, error) {
-	conn, err := grpc.Dial(srvAddr, grpc.WithInsecure())
+	conn, err := grpc.Dial(ServerAddress, grpc.WithInsecure())
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +26,7 @@ func NewClient() (GetClient, error) {
 func NewServer() error {
 	srv := grpc.NewServer()
 	RegisterGetServer(srv, &Server{})
-	lis, err := net.Listen("tcp", srvAddr)
+	lis, err := net.Listen("tcp", ServerAddress)
 	if err != nil {
 		return err
 	}
