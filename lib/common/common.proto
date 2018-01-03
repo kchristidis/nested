@@ -13,8 +13,5 @@ message Request {
 }
 
 message Response {
-    oneof Type {
-        bool foo = 1;
-        string bar = 2;
-    }
+    int32 foo = 1;
 }

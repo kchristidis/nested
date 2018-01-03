@@ -11,6 +11,6 @@ service Get {
 message Response {
     oneof Type {
         common.Response common = 1;
-        int32 baz = 2;
+        string baz = 2;
     }
 }

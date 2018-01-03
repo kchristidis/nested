@@ -55,7 +55,7 @@ type Response_Common struct {
 	Common *common.Response `protobuf:"bytes,1,opt,name=common,oneof"`
 }
 type Response_Baz struct {
-	Baz int32 `protobuf:"varint,2,opt,name=baz,oneof"`
+	Baz string `protobuf:"bytes,2,opt,name=baz,oneof"`
 }
 
 func (*Response_Common) isResponse_Type() {}
@@ -75,11 +75,11 @@ func (m *Response) GetCommon() *common.Response {
 	return nil
 }
 
-func (m *Response) GetBaz() int32 {
+func (m *Response) GetBaz() string {
 	if x, ok := m.GetType().(*Response_Baz); ok {
 		return x.Baz
 	}
-	return 0
+	return ""
 }
 
 // XXX_OneofFuncs is for the internal use of the proto package.
@@ -100,8 +100,8 @@ func _Response_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
 			return err
 		}
 	case *Response_Baz:
-		b.EncodeVarint(2<<3 | proto.WireVarint)
-		b.EncodeVarint(uint64(x.Baz))
+		b.EncodeVarint(2<<3 | proto.WireBytes)
+		b.EncodeStringBytes(x.Baz)
 	case nil:
 	default:
 		return fmt.Errorf("Response.Type has unexpected type %T", x)
@@ -121,11 +121,11 @@ func _Response_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffe
 		m.Type = &Response_Common{msg}
 		return true, err
 	case 2: // Type.baz
-		if wire != proto.WireVarint {
+		if wire != proto.WireBytes {
 			return true, proto.ErrInternalBadWireType
 		}
-		x, err := b.DecodeVarint()
-		m.Type = &Response_Baz{int32(x)}
+		x, err := b.DecodeStringBytes()
+		m.Type = &Response_Baz{x}
 		return true, err
 	default:
 		return false, nil
@@ -142,8 +142,9 @@ func _Response_OneofSizer(msg proto.Message) (n int) {
 		n += proto.SizeVarint(uint64(s))
 		n += s
 	case *Response_Baz:
-		n += proto.SizeVarint(2<<3 | proto.WireVarint)
-		n += proto.SizeVarint(uint64(x.Baz))
+		n += proto.SizeVarint(2<<3 | proto.WireBytes)
+		n += proto.SizeVarint(uint64(len(x.Baz)))
+		n += len(x.Baz)
 	case nil:
 	default:
 		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
@@ -241,8 +242,8 @@ var fileDescriptor0 = []byte{
 	0x4a, 0x41, 0x5c, 0x1c, 0x41, 0xa9, 0xc5, 0x05, 0xf9, 0x79, 0xc5, 0xa9, 0x42, 0x5a, 0x5c, 0x6c,
 	0x10, 0x39, 0x09, 0x46, 0x05, 0x46, 0x0d, 0x6e, 0x23, 0x01, 0x3d, 0xa8, 0x52, 0x98, 0x0a, 0x0f,
 	0x86, 0x20, 0xa8, 0x0a, 0x21, 0x21, 0x2e, 0xe6, 0xa4, 0xc4, 0x2a, 0x09, 0x26, 0x05, 0x46, 0x0d,
-	0x56, 0x0f, 0x86, 0x20, 0x10, 0xc7, 0x89, 0x8d, 0x8b, 0x25, 0xa4, 0xb2, 0x20, 0xd5, 0xc8, 0x90,
+	0x4e, 0x0f, 0x86, 0x20, 0x10, 0xc7, 0x89, 0x8d, 0x8b, 0x25, 0xa4, 0xb2, 0x20, 0xd5, 0xc8, 0x90,
 	0x8b, 0xd9, 0x3d, 0xb5, 0x44, 0x48, 0x0b, 0x42, 0xf1, 0x23, 0x4c, 0x29, 0x2c, 0x4d, 0x2d, 0x2e,
 	0x91, 0x12, 0xd2, 0x83, 0x7b, 0x02, 0x66, 0x70, 0x12, 0x1b, 0xd8, 0x35, 0xc6, 0x80, 0x00, 0x00,
-	0x00, 0xff, 0xff, 0x07, 0x05, 0x84, 0x81, 0x0b, 0x01, 0x00, 0x00,
+	0x00, 0xff, 0xff, 0x1d, 0x32, 0x2f, 0x49, 0x0b, 0x01, 0x00, 0x00,
 }
