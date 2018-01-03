@@ -13,6 +13,6 @@ service Get {
 message Response {
     oneof Type {
         common.Response common = 1;
-        string baz = 2;
+        string extra = 2;
     }
 }

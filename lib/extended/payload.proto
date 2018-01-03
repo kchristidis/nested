@@ -7,5 +7,5 @@ import "github.com/kchristidis/nested/lib/common/payload.proto";
 // Payload defines the values that an extended Get request can carry.
 message Payload {
     common.Payload common = 1;
-    string filter_type = 2;
+    string extra = 2;
 }
