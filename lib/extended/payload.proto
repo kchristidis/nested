@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package extended;
+
+import "github.com/kchristidis/nested/lib/common/payload.proto";
+
+message Payload {
+    common.Payload common = 1;
+    string filter_type = 2;
+}
