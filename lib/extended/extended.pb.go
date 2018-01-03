@@ -6,9 +6,11 @@ Package extended is a generated protocol buffer package.
 
 It is generated from these files:
 	github.com/kchristidis/nested/lib/extended/extended.proto
+	github.com/kchristidis/nested/lib/extended/payload.proto
 
 It has these top-level messages:
 	Response
+	Payload
 */
 package extended
 
