@@ -2,7 +2,6 @@ package common
 
 import (
 	"context"
-	"fmt"
 	"net"
 
 	"github.com/golang/protobuf/proto"
@@ -10,12 +9,9 @@ import (
 	"google.golang.org/grpc"
 )
 
-// ServerAddress carries the address the server is listening on.
-const ServerAddress = "localhost:5051"
-
 // NewClient returns a new client.
-func NewClient() (GetClient, error) {
-	conn, err := grpc.Dial(ServerAddress, grpc.WithInsecure())
+func NewClient(serverAddress string) (GetClient, error) {
+	conn, err := grpc.Dial(serverAddress, grpc.WithInsecure())
 	if err != nil {
 		return nil, err
 	}
@@ -23,10 +19,10 @@ func NewClient() (GetClient, error) {
 }
 
 // NewServer spawns a new server.
-func NewServer() error {
+func NewServer(serverAddress string) error {
 	srv := grpc.NewServer()
 	RegisterGetServer(srv, &Server{})
-	lis, err := net.Listen("tcp", ServerAddress)
+	lis, err := net.Listen("tcp", serverAddress)
 	if err != nil {
 		return err
 	}
@@ -38,10 +34,10 @@ type Server struct{}
 
 // Get parses the request and returns the appropriate value.
 func (s *Server) Get(ctx context.Context, req *Request) (*Response, error) {
-	p := Payload{}
-	if err := proto.Unmarshal(req.GetPayload(), &p); err != nil {
+	in := Payload{}
+	if err := proto.Unmarshal(req.GetPayload(), &in); err != nil {
 		return nil, err
 	}
-	r := &Response{Type: &Response_Bar{Bar: fmt.Sprintf("you asked for %d", p.GetStartFrom())}}
-	return r, nil
+	resp := &Response{Value: in.GetValue()}
+	return resp, nil
 }
