@@ -4,14 +4,17 @@ option go_package = "github.com/kchristidis/nested/lib/common";
 
 package common;
 
+// Get returns a mirrored request.
 service Get {
     rpc Get (Request) returns (Response);
 }
 
+// Request carries a marshaled Payload.
 message Request {
     bytes payload = 1; // marshaled Payload
 }
 
+// Response carries the return value.
 message Response {
     int32 foo = 1;
 }

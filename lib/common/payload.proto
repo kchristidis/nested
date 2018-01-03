@@ -4,6 +4,7 @@ option go_package = "github.com/kchristidis/nested/lib/common";
 
 package common;
 
+// Payload defines the values that a common Get request can carry.
 message Payload {
     int32 start_from = 1;
 }

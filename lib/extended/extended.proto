@@ -4,10 +4,12 @@ package extended;
 
 import "github.com/kchristidis/nested/lib/common/common.proto";
 
+// Get returns a mirrored request.
 service Get {
     rpc Get (common.Request) returns (Response);
 }
 
+// Response extends the common Response by introduce an additional type.
 message Response {
     oneof Type {
         common.Response common = 1;
