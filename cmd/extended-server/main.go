@@ -88,7 +88,7 @@ func (s *Server) Get(ctx context.Context, req *common.Request) (*extended.Respon
 	if err = proto.Unmarshal(req.GetPayload(), &ep); err != nil {
 		return nil, errors.Wrap(err, "failed to unpack request")
 	}
-	logger.Debugf("received GET request with 'common.value' set to %d and 'extra' set to '%s'", ep.GetCommon().GetValue(), ep.GetExtra())
+	logger.Debugf("Received GET request with 'common.value' set to %d and 'extra' set to '%s'", ep.GetCommon().GetValue(), ep.GetExtra())
 
 	// Use common client
 	var cpm []byte // See: https://github.com/golang/go/wiki/CodeReviewComments#declaring-empty-slices
