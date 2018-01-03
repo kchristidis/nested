@@ -13,12 +13,12 @@ import (
 const srvAddr = "localhost:5051"
 
 // NewClient returns a new client.
-func NewClient() GetClient {
+func NewClient() (GetClient, error) {
 	conn, err := grpc.Dial(srvAddr, grpc.WithInsecure())
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	return NewGetClient(conn)
+	return NewGetClient(conn), nil
 }
 
 // NewServer spawns a new server.
@@ -27,7 +27,7 @@ func NewServer() error {
 	RegisterGetServer(srv, &Server{})
 	lis, err := net.Listen("tcp", srvAddr)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	return srv.Serve(lis)
 }
@@ -39,9 +39,8 @@ type Server struct{}
 func (s *Server) Get(ctx context.Context, req *Request) (*Response, error) {
 	p := Payload{}
 	if err := proto.Unmarshal(req.GetPayload(), &p); err != nil {
-		panic(err)
+		return nil, err
 	}
-
 	r := &Response{Type: &Response_Bar{Bar: fmt.Sprintf("you asked for %d", p.GetStartFrom())}}
 	return r, nil
 }
