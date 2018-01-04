@@ -4,7 +4,7 @@ option go_package = "github.com/kchristidis/nested/lib/common";
 
 package common;
 
-// Get returns a mirrored request.
+// Get returns the request value.
 service Get {
     rpc Get (Request) returns (Response);
 }
